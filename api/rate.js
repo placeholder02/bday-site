@@ -38,6 +38,7 @@ export default async function handler(req, res) {
       body: JSON.stringify({ chat_id: CHAT_ID, text })
     });
     const tgJson = await tgResp.json();
+    console.log("Telegram response:", tgJson);
     if (!tgJson.ok) {
       return res.status(502).json({ ok:false, error:'Telegram error', tg:tgJson });
     }

@@ -197,6 +197,8 @@ async function saveRating() {
   const notes = (notesEl?.value || '').trim();
 
   try {
+    
+    console.log("API response:", data);
     const res = await fetch(API_URL, {
       method:'POST',
       headers:{ 'Content-Type':'application/json' },
