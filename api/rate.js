@@ -1,10 +1,14 @@
 // api/rate.js
 export default async function handler(req, res) {
-  // CORS (يفضل تغيّر * إلى دومين صفحتك)
-    res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'POST,OPTIONS');
+  // الهيدرز الأساسية لـ CORS
+  res.setHeader('Access-Control-Allow-Origin', '*'); // أو دومينك النهائي
+  res.setHeader('Access-Control-Allow-Methods', 'GET,POST,OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
-  if (req.method === 'OPTIONS') return res.status(200).end();
+
+  // رد فوري على preflight
+  if (req.method === 'OPTIONS') {
+    return res.status(200).end();
+  }
 
   if (req.method !== 'POST') {
     return res.status(405).json({ ok: false, error: 'Method Not Allowed' });
@@ -21,16 +25,9 @@ export default async function handler(req, res) {
 
     const BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
     const CHAT_ID   = process.env.TELEGRAM_CHAT_ID;
-    if (!BOT_TOKEN || !CHAT_ID) {
-      return res.status(500).json({ ok: false, error: 'Missing env vars' });
-    }
 
     const ts = new Date().toISOString().replace('T',' ').slice(0,19);
-    const text =
-      `⭐ تقييم جديد\n` +
-      `التقييم: ${rating}/5\n` +
-      `الملاحظات: ${notes || '(لا يوجد)'}\n` +
-      `الوقت: ${ts}`;
+    const text = `⭐ تقييم جديد\nالتقييم: ${rating}/5\nالملاحظات: ${notes || '(لا يوجد)'}\nالوقت: ${ts}`;
 
     const tgResp = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
       method: 'POST',
@@ -38,13 +35,13 @@ export default async function handler(req, res) {
       body: JSON.stringify({ chat_id: CHAT_ID, text })
     });
     const tgJson = await tgResp.json();
-    console.log("Telegram response:", tgJson);
+
     if (!tgJson.ok) {
       return res.status(502).json({ ok:false, error:'Telegram error', tg:tgJson });
     }
 
     return res.json({ ok:true, delivered:true });
   } catch (e) {
-    return res.status(500).json({ ok:false, error:'Server error' });
+    return res.status(500).json({ ok:false, error:'Server error', details: e.message });
   }
 }
