@@ -198,7 +198,6 @@ async function saveRating() {
 
   try {
     
-    console.log("API response:", data);
     const res = await fetch(API_URL, {
       method:'POST',
       headers:{ 'Content-Type':'application/json' },
@@ -209,9 +208,11 @@ async function saveRating() {
       })
     });
     const data = await res.json();
-    rateStatus.textContent = data.ok ? 'تم الإرسال لتليجرام ✅' : 'فشل الإرسال ❌';
+
+    console.log("API response:", data);
+    rateStatus.textContent = data.ok ? 'تم الإرسال لتليجرام ✅' : '1فشل الإرسال ❌';
   } catch {
-    rateStatus.textContent = 'تعذر الاتصال بالخادم ❌';
+    rateStatus.textContent = '1تعذر الاتصال بالخادم ❌';
   }
 }
 
