@@ -3,7 +3,7 @@ const audio = document.getElementById('bgm');
 const musicBtn = document.getElementById('musicToggleBtn');
 
 function setBtnLabel(){
-  musicBtn.textContent = audio.paused ? '▶️ تشغيل الموسيقى' : '⏸️ إيقاف الموسيقى';
+  musicBtn.textContent = audio.paused ? '▶️' : '⏸️';
 }
 function tryPlay(){
   audio.play().then(setBtnLabel).catch(()=>{});
@@ -166,6 +166,77 @@ if (modal) {
 document.addEventListener('keydown', e => {
   if (e.key === 'Escape' && modal && !modal.hidden) hideModal();
 });
+
+// ======== Image Modal ========
+const imgTiles = document.querySelectorAll('.image-gallery img');
+const imageModal = document.getElementById('imageModal');
+const modalImg = document.getElementById('modalImg');
+const imgCaption = document.getElementById('imgCaption');
+const closeImageModal = document.getElementById('closeImageModal');
+
+// نستخدم نفس فلاغ الموسيقى الموجود
+// let wasMusicPlaying = false;  // (موجود مسبقًا لفيديو — ما تعيد تعريفه)
+
+function openImageModal(src, caption) {
+  if (!imageModal) return;
+
+  // أوقف الموسيقى مؤقتًا لو كانت شغالة
+  if (!audio.paused) {
+    wasMusicPlaying = true;
+    audio.pause();
+  } else {
+    wasMusicPlaying = false;
+  }
+
+  imageModal.hidden = false;
+  if (modalImg) modalImg.src = src || '';
+  if (imgCaption) imgCaption.textContent = caption || '';
+  document.body.style.overflow = 'hidden';
+}
+
+function hideImageModal() {
+  if (!imageModal) return;
+
+  imageModal.hidden = true;
+  if (modalImg) modalImg.removeAttribute('src');
+  if (imgCaption) imgCaption.textContent = '';
+  document.body.style.overflow = '';
+
+  // رجّع الموسيقى إذا كانت شغّالة قبل فتح المودال
+  if (wasMusicPlaying) {
+    audio.play().catch(()=>{});
+  }
+}
+
+// فتح عند الضغط على صورة
+imgTiles.forEach(img => {
+  img.addEventListener('click', () => {
+    const src = img.getAttribute('src');
+    const caption = img.dataset.caption || '';
+    openImageModal(src, caption);
+  });
+});
+
+// إغلاقات المودال
+if (closeImageModal) closeImageModal.addEventListener('click', hideImageModal);
+if (imageModal) {
+  imageModal.addEventListener('click', (e) => {
+    if (e.target === imageModal) hideImageModal(); // كبسة على الخلفية
+  });
+}
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && imageModal && !imageModal.hidden) hideImageModal();
+});
+
+// ======== تحديث فتح الفيديو للـ <source> الجديد (لو ما عدلته قبل) ========
+thumbs.forEach(vid => {
+  const source = vid.querySelector('source');
+  if (source) {
+    vid.addEventListener('click', () => openModal(source.getAttribute('src')));
+  }
+});
+
+
 
 // ======== Rating & Feedback ========
 const starBtns = document.querySelectorAll('.stars .star');
