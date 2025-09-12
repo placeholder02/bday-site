@@ -18,7 +18,7 @@ export default async function handler(req, res) {
 
   try {
     // Parse body data
-    const { rating, notes = '', secret } = req.body || {};
+    const { rating, notes = '', name = '', secret } = req.body || {};
 
     // Validate secret
     if (secret !== process.env.RATE_SECRET) {
@@ -40,7 +40,14 @@ export default async function handler(req, res) {
 
     // Create message
     const ts = new Date().toISOString().replace('T', ' ').slice(0, 19);
-    const text = `⭐ تقييم جديد\nالتقييم: ${rating}/5\nالملاحظات: ${notes || '(لا يوجد)'}\nالوقت: ${ts}`;
+
+    const text =
+    `⭐ تقييم جديد\n` +
+    `الاسم: ${name || '(مجهول)'}\n` +
+    `التقييم: ${rating}/5\n` +
+    `الملاحظات: ${notes || '(لا يوجد)'}\n` +
+    `الوقت: ${ts}`;
+
 
     // Send to Telegram
     const tgResp = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {

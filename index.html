@@ -11,6 +11,7 @@
 <body>
   <audio id="bgm" src="music.mp3" preload="auto" loop></audio>
   <audio id="celebrateSound" src="celebrate.mp3" preload="auto"></audio>
+  <audio id="memorySound" src="memory.mp3" preload="auto"></audio>
   <canvas id="confetti"></canvas>
 <!-- شريط علوي ستّيكي: العداد بالنص + أيقونات عمودية على الجنب -->
 <!-- البار العلوي: العداد فقط -->
@@ -20,8 +21,6 @@
     <span id="ageValue"></span>
   </div>
 </div>
-
-
 
   <h1>كل عام وإنت بخير نغوشة</h1>
   <h2>صفحة معايدة قال إني مهندس حاسوب</h2>
@@ -38,7 +37,7 @@
 
     <p>بتمنى وبدعي من قلبي إنها تكون هالسنة عليكِ مليانة للسما نجاح وتوفيق وسعادة وراحة بال وقرب من الله ❤❤❤ هو بتمنالك هالخراف بكل عمرك مش بس بسنة، بس هيك بسمع الناس بحكوا.</p>
 
-    <p class="signature">ختاماً<br> كلعام ونت ابخير زلمتي<br>عقبال 120 تهريهم بصحة لحديد ⚜🦅</p>
+    <p class="signature">ختاماً<br> كلعام ونت ابخير زلمتي<br>عقبال 120 تهريهن بصحه لحديد ⚜🦅</p>
   </div>
 
 <div class="video-section">
@@ -64,7 +63,7 @@
   <div class="image-gallery">
     <div class="tile">
       <img src="memory1.jpg" alt="ذكرى 1" loading="lazy"
-           data-caption="لولاه علي ولا كان ععمري ما عرفت اراضيك">
+           data-caption="لولاه علي ولا كان عمري ما عرفت اراضيك">
     </div>
     <div class="tile">
       <img src="memory2.jpg" alt="ذكرى 2" loading="lazy"
@@ -72,7 +71,7 @@
     </div>
     <div class="tile">
       <img src="memory3.jpg" alt="ذكرى 3" loading="lazy"
-           data-caption="جعان للامانة ونفسي فوتوشيني فتحمليني">
+           data-caption="اجواء الاغنية المفضلة الي كل متزهقي بتسويلها ريبوست">
     </div>
     <div class="tile">
       <img src="memory4.jpg" alt="ذكرى 4" loading="lazy"
@@ -101,10 +100,13 @@
     <button class="star" data-value="5" aria-label="5 نجمات"  type="button">★</button>
   </div>
 
-  <textarea id="feedbackNotes" class="notes" rows="4" placeholder="زتي رأيك هون…"></textarea>
+  <!-- خانة الاسم الجديدة -->
+  <input id="feedbackName" class="name" type="text" placeholder="اكتبي اسمك هون…">
+
+  <textarea id="feedbackNotes" class="notes" rows="4" placeholder="زتي ملاحظاتك هون…"></textarea>
 
   <div class="rate-actions">
-    <button id="saveRatingBtn" class="btn">ابعث التقييم</button>
+    <button id="saveRatingBtn" class="btn">💾 حفظ التقييم</button>
     <span id="rateStatus" class="rate-status" aria-live="polite"></span>
   </div>
 </div>

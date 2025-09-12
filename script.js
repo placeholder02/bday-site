@@ -173,14 +173,12 @@ const imageModal = document.getElementById('imageModal');
 const modalImg = document.getElementById('modalImg');
 const imgCaption = document.getElementById('imgCaption');
 const closeImageModal = document.getElementById('closeImageModal');
+const memorySound = document.getElementById('memorySound');
 
-// نستخدم نفس فلاغ الموسيقى الموجود
-// let wasMusicPlaying = false;  // (موجود مسبقًا لفيديو — ما تعيد تعريفه)
-
-function openImageModal(src, caption) {
+function openImageModal(src, caption, triggerId) {
   if (!imageModal) return;
 
-  // أوقف الموسيقى مؤقتًا لو كانت شغالة
+  // وقف الموسيقى الأساسية مؤقتًا
   if (!audio.paused) {
     wasMusicPlaying = true;
     audio.pause();
@@ -192,6 +190,12 @@ function openImageModal(src, caption) {
   if (modalImg) modalImg.src = src || '';
   if (imgCaption) imgCaption.textContent = caption || '';
   document.body.style.overflow = 'hidden';
+
+  // 🔹 لو الصورة هي memory3 → شغّل الأغنية الخاصة
+  if (triggerId === 'memory3') {
+    memorySound.currentTime = 0;
+    memorySound.play().catch(()=>{});
+  }
 }
 
 function hideImageModal() {
@@ -202,7 +206,11 @@ function hideImageModal() {
   if (imgCaption) imgCaption.textContent = '';
   document.body.style.overflow = '';
 
-  // رجّع الموسيقى إذا كانت شغّالة قبل فتح المودال
+  // 🔹 أوقف أغنية memory.mp3 لو كانت شغالة
+  memorySound.pause();
+  memorySound.currentTime = 0;
+
+  // رجّع الموسيقى الأساسية إذا كانت شغّالة قبل
   if (wasMusicPlaying) {
     audio.play().catch(()=>{});
   }
@@ -213,7 +221,8 @@ imgTiles.forEach(img => {
   img.addEventListener('click', () => {
     const src = img.getAttribute('src');
     const caption = img.dataset.caption || '';
-    openImageModal(src, caption);
+    const id = img.getAttribute('alt')?.toLowerCase().includes('3') ? 'memory3' : '';
+    openImageModal(src, caption, id);
   });
 });
 
@@ -266,27 +275,32 @@ starBtns.forEach(btn => {
 // حفظ التقييم: localStorage + تنزيل ملف TXT
 const API_URL = 'https://bday-site-two.vercel.app/api/rate'; // عدّل الرابط
 
+const nameEl = document.getElementById('feedbackName');
+
 async function saveRating() {
-  if (!currentRating) { rateStatus.textContent = 'اختر التقييم أولًا.'; return; }
+  if (!currentRating) { 
+    rateStatus.textContent = 'اختر التقييم أولًا.'; 
+    return; 
+  }
   const notes = (notesEl?.value || '').trim();
+  const name  = (nameEl?.value || '').trim();
 
   try {
-    
     const res = await fetch(API_URL, {
       method:'POST',
       headers:{ 'Content-Type':'application/json' },
       body: JSON.stringify({
         rating: currentRating,
         notes,
-        secret: 'mys3cret_123' // نفس RATE_SECRET
+        name,
+        secret: 'mys3cret_123'
       })
     });
     const data = await res.json();
-
-    console.log("API response:", data);
-    rateStatus.textContent = data.ok ? 'تم الإرسال لتليجرام ✅' : '1فشل الإرسال ❌';
-  } catch {
-    rateStatus.textContent = '1تعذر الاتصال بالخادم ❌';
+    rateStatus.textContent = data.ok ? 'تم الإرسال ✅' : 'فشل الإرسال ❌';
+  } catch (err) {
+    console.error("Error calling API:", err);
+    rateStatus.textContent = 'تعذر الاتصال بالخادم ❌';
   }
 }
 
