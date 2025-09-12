@@ -1,3 +1,4 @@
+/* === Base === */
 body {
   margin: 0;
   font-family: 'Cairo', sans-serif;
@@ -7,10 +8,12 @@ body {
   padding: 40px 20px;
   display: flex;
   flex-direction: column;
-  align-items: left;
+  align-items: center;   /* يبقي كل الأقسام بالوسط */
   min-height: 100svh;
 }
-#confetti{ position: fixed; inset: 0; pointer-events: none; }
+
+#confetti{ position: fixed; inset: 0; pointer-events: none; z-index: 0; }
+
 h1 {
   font-size: 36px;
   font-weight: 900;
@@ -26,6 +29,8 @@ h2 {
   margin-bottom: 16px;
   text-align:center;
 }
+
+/* Buttons row (small) */
 .controls{ display:flex; gap:10px; margin-bottom:24px; }
 .btn{
   padding: 10px 14px;
@@ -36,6 +41,8 @@ h2 {
   cursor: pointer;
 }
 .btn:hover{ box-shadow: 0 0 0 3px rgba(245,158,11,.25); }
+
+/* Card */
 .message {
   max-width: 700px;
   background: #fff;
@@ -50,46 +57,38 @@ h2 {
 .message p:last-child { margin-bottom: 0; }
 .signature { margin-top: 30px; font-size: 18px; font-weight: 700; text-align: center; color: #907a52; }
 
-/* البار العلوي */
-.topbar{
-  position: sticky;
+/* === Top Bar (fixed) === */
+
+/* === التوب بار: متمركز + ستّيكي + يدعم RTL في الصفحة === */
+.topbar {
+  position: sticky;                      /* يثبّت العنصر أثناء التمرير */
   top: calc(env(safe-area-inset-top) + 10px);
   z-index: 1100;
-  width: min(92vw, 700px);
-  margin: 0 auto 20px;
+
+  /* الحجم والتوسيط */
+  width: min(92vw, 700px);               /* مرن حتى 700px */
+  margin-inline: auto;                   /* يوسّطه حتى مع RTL */
+  box-sizing: border-box;
+
+  /* شبكة المحتوى */
+  display: flex;
+  justify-content: center;               /* العداد بالوسط */
+  align-items: center;
+
+  /* النصوص والأيقونات */
+  direction: rtl;                        /* يمنع اتجاه RTL من تغيير المحاذاة الداخلية */
+  text-align: center;
+
+  /* شكل البار */
   padding: 10px 16px;
   background: rgba(255,255,255,0.55);
   backdrop-filter: blur(8px);
   border: 1px solid rgba(0,0,0,0.06);
   border-radius: 14px;
   box-shadow: 0 6px 18px rgba(0,0,0,0.06);
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 
-.age-counter{
-  text-align: center;
-  font-size: 16 px;
-  line-height: 1.45;
-  color: #907a52;
-  font-weight: 700;
-}
-.age-counter #ageValue{
-  display: inline-block;
-  font-size: 17px;
-  font-weight: 800;
-  color: #69593c;
-}
-
-/* الأزرار فوق الرسالة */
-.controls{
-  display: flex;
-  justify-content: center;
-  gap: 12px;
-  margin-bottom: 20px;
-}
+/* أيقونات دائرية */
 .icon-btn{
   width: 44px;
   height: 44px;
@@ -106,9 +105,30 @@ h2 {
 .icon-btn:hover{ box-shadow: 0 0 0 3px rgba(245,158,11,.20); }
 .icon-btn:active{ transform: scale(.96); }
 
-/* الكونفيتي يبقى بالخلفية */
-#confetti{ position: fixed; inset: 0; pointer-events: none; z-index: 0; }
+/* عدّاد */
+.age-counter{
+  text-align: center;
+  font-size: 16px;     /* تم تصحيح المسافة: 16px بدل 16 px */
+  line-height: 1.45;
+  color: #907a52;
+  font-weight: 700;
+}
+.age-counter #ageValue{
+  display: inline-block;
+  font-size: 17px;
+  font-weight: 800;
+  color: #69593c;
+}
 
+/* أزرار فوق الرسالة (نسخة موحّدة) */
+.controls{
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+/* معرض الفيديو */
 .video-gallery {
   display: flex;
   gap: 10px;
@@ -124,11 +144,9 @@ h2 {
   box-shadow: 0 2px 6px rgba(0,0,0,0.15);
   transition: transform 0.2s;
 }
-.video-gallery .thumb:hover {
-  transform: scale(1.05);
-}
+.video-gallery .thumb:hover { transform: scale(1.05); }
 
-/* نافذة الفيديو الكبير */
+/* مودال الفيديو */
 .video-modal {
   position: fixed;
   inset: 0;
@@ -153,6 +171,7 @@ h2 {
   cursor: pointer;
 }
 .video-modal[hidden] { display: none !important; }
+
 /* قسم الفيديو */
 .video-section {
   max-width: 700px;
@@ -163,36 +182,15 @@ h2 {
   box-shadow: 0 4px 10px rgba(0,0,0,.05);
   border: 1px solid rgba(0,0,0,.08);
 }
-
 .video-title {
   margin: 0 0 16px 0;
   font-size: 20px;
   font-weight: 700;
   text-align: center;
-  color: #907a52; /* نفس لون التوقيع والعناوين */
+  color: #907a52;
 }
 
-.video-gallery {
-  display: flex;
-  gap: 10px;
-  justify-content: center;
-}
-
-.video-gallery .thumb {
-  width: 150px;
-  height: 260px;
-  object-fit: cover;
-  border-radius: 12px;
-  cursor: pointer;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
-  transition: transform 0.2s;
-}
-
-.video-gallery .thumb:hover {
-  transform: scale(1.05);
-}
-
-/* صندوق التقييم بنفس ستايل الرسالة */
+/* صندوق التقييم */
 .rate-section {
   max-width: 700px;
   background: #fff;
@@ -202,7 +200,6 @@ h2 {
   box-shadow: 0 4px 10px rgba(0,0,0,.05);
   border: 1px solid rgba(0,0,0,.08);
 }
-
 .rate-title {
   margin: 0 0 12px 0;
   font-size: 20px;
@@ -210,6 +207,7 @@ h2 {
   text-align: center;
   color: #907a52;
 }
+
 .rate-section .name{
   width: 100%;
   padding: 10px 12px;
@@ -226,7 +224,7 @@ h2 {
   box-shadow: 0 0 0 2px rgba(144,122,82,0.2);
 }
 
-/* النجوم */
+/* نجوم التقييم */
 .stars {
   display: flex;
   justify-content: center;
@@ -234,27 +232,24 @@ h2 {
   margin-bottom: 12px;
   user-select: none;
 }
-
 .star {
   font-size: 28px;
   line-height: 1;
   background: transparent;
   border: none;
   cursor: pointer;
-  color: #cbb79a;           /* نجمة خاملة */
+  color: #cbb79a;
   transition: transform .12s;
   padding: 6px;
   border-radius: 8px;
 }
 .star.active,
 .star:hover,
-.star:focus {
-  color: #907a52;          /* نجمة مفعلة */
-}
+.star:focus { color: #907a52; }
 .star:active { transform: scale(0.95); }
 .star:focus { outline: 2px solid rgba(144,122,82,.25); }
 
-/* الملاحظات */
+/* ملاحظات التقييم */
 .notes {
   width: 100%;
   box-sizing: border-box;
@@ -267,8 +262,6 @@ h2 {
   color: #1f2937;
   resize: vertical;
 }
-
-/* أزرار وحالة */
 .rate-actions {
   display: flex;
   gap: 10px;
@@ -276,26 +269,23 @@ h2 {
   justify-content: center;
   margin-top: 12px;
 }
-
 .rate-status {
   font-size: 14px;
   color: #907a52;
 }
 
+/* فوتر */
 .footer {
   margin-top: 40px;
   padding: 16px;
   text-align: center;
   font-size: 14px;
-  color: rgba(255, 255, 255, 0.85); /* أبيض شفاف يبين عالخلفية الغامقة */
+  color: rgba(255, 255, 255, 0.85);
   font-weight: 500;
 }
+.footer p { margin: 0; }
 
-.footer p {
-  margin: 0;
-}
-
-/* صندوق الصور بنفس ستايل الرسالة/الفيديو */
+/* الصور */
 .image-section {
   max-width: 700px;
   background: #fff;
@@ -312,8 +302,6 @@ h2 {
   text-align: center;
   color: #907a52;
 }
-
-/* جريد 2x2 مربعات */
 .image-gallery {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -322,11 +310,11 @@ h2 {
 .image-gallery .tile {
   position: relative;
   width: 100%;
-  aspect-ratio: 1 / 1;            /* مربّع نظيف يدعم iOS الحديثة */
+  aspect-ratio: 1 / 1;
   overflow: hidden;
   border-radius: 12px;
   box-shadow: 0 2px 6px rgba(0,0,0,0.15);
-  background: #f8f5ef;            /* لون خلفية لو الصورة تأخرت */
+  background: #f8f5ef;
 }
 .image-gallery img {
   width: 100%;
@@ -350,7 +338,6 @@ h2 {
   padding: 20px;
 }
 .image-modal[hidden] { display: none !important; }
-
 .image-modal .image-modal-box {
   max-width: min(900px, 92vw);
   max-height: 88vh;
@@ -375,8 +362,6 @@ h2 {
   text-align: center;
   font-size: 14px;
 }
-
-/* زر إغلاق */
 .image-modal .close-x {
   position: absolute;
   top: 16px;
