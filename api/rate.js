@@ -1,47 +1,20 @@
 // api/rate.js
 export default async function handler(req, res) {
-  // الهيدرز الأساسية لـ CORS
-  res.setHeader('Access-Control-Allow-Origin', '*'); // أو دومينك النهائي
+  // لازم تنضاف الهيدرز قبل أي return
+  res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET,POST,OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 
-  // رد فوري على preflight
+  // preflight request (OPTIONS)
   if (req.method === 'OPTIONS') {
     return res.status(200).end();
   }
 
+  // باقي الميثودات
   if (req.method !== 'POST') {
     return res.status(405).json({ ok: false, error: 'Method Not Allowed' });
   }
 
-  try {
-    const { rating, notes = '', secret } = req.body || {};
-    if (secret !== process.env.RATE_SECRET) {
-      return res.status(401).json({ ok: false, error: 'Unauthorized' });
-    }
-    if (!(Number(rating) >= 1 && Number(rating) <= 5)) {
-      return res.status(400).json({ ok: false, error: 'Invalid rating' });
-    }
-
-    const BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
-    const CHAT_ID   = process.env.TELEGRAM_CHAT_ID;
-
-    const ts = new Date().toISOString().replace('T',' ').slice(0,19);
-    const text = `⭐ تقييم جديد\nالتقييم: ${rating}/5\nالملاحظات: ${notes || '(لا يوجد)'}\nالوقت: ${ts}`;
-
-    const tgResp = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
-      method: 'POST',
-      headers: { 'Content-Type':'application/json' },
-      body: JSON.stringify({ chat_id: CHAT_ID, text })
-    });
-    const tgJson = await tgResp.json();
-
-    if (!tgJson.ok) {
-      return res.status(502).json({ ok:false, error:'Telegram error', tg:tgJson });
-    }
-
-    return res.json({ ok:true, delivered:true });
-  } catch (e) {
-    return res.status(500).json({ ok:false, error:'Server error', details: e.message });
-  }
+  // بس للتاكيد انه الرد يوصل
+  return res.json({ ok: true, msg: "CORS test passed ✅" });
 }
