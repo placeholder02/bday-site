@@ -333,6 +333,12 @@ h2 {
   text-align: center;
   color: #907a52;
 }
+.image-text{
+  text-align: center;
+  font-size: 14px;
+  color: #746e61;
+  margin: 20px 0 0px 0;
+}
 .image-gallery {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
