@@ -351,6 +351,10 @@ if (saveBtn) {
     s.style.left = Math.random()*W + 'px';
     s.style.top  = Math.random()*H + 'px';
     s.style.opacity = 0.1 + Math.random()*0.05;
+
+    const rotation = (Math.random() * 60 - 30).toFixed(2);
+    s.style.transform = `rotate(${rotation}deg)`;
+    
     bg.appendChild(s);
   }
 })();
