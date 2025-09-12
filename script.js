@@ -5,25 +5,28 @@ const musicBtn = document.getElementById('musicToggleBtn');
 function setBtnLabel(){
   musicBtn.textContent = audio.paused ? '▶️' : '⏸️';
 }
+
 function tryPlay(){
   audio.play().then(setBtnLabel).catch(()=>{});
 }
-['click','touchstart'].forEach(ev => {
-  window.addEventListener(ev, function once(){
-    // start background music
-    tryPlay();
+// ======== First Interaction: start music + celebrate + confetti (once) ========
+let firstInteractionDone = false;
 
-    // play celebrate sound once
-    celebrateSound.currentTime = 0;
-    celebrateSound.play().catch(()=>{});
+function handleFirstInteraction(){
+  if (firstInteractionDone) return;
+  firstInteractionDone = true;
 
-    // burst confetti 🎊
-    burst(220);
+  tryPlay(); // bg music
+  celebrateSound.currentTime = 0;
+  celebrateSound.play().catch(()=>{});
+  burst(220);
+}
 
-    // remove listener so it runs only once
-    window.removeEventListener(ev, once, {capture:false});
-  }, {once:true});
-});
+// شغّل مرة واحدة قبل أي handlers ثانية (capture)
+window.addEventListener('pointerdown', handleFirstInteraction, { once:true, capture:true });
+// (اختياري للمفاتيح على اللابتوب)
+window.addEventListener('keydown', handleFirstInteraction, { once:true, capture:true });
+
 
 musicBtn.addEventListener('click', ()=>{
   if(audio.paused) audio.play().catch(()=>{}); else audio.pause();
@@ -117,18 +120,14 @@ const modal = document.getElementById('videoModal');
 const modalVideo = document.getElementById('modalVideo');
 const closeModal = document.getElementById('closeModal');
 
-let wasMusicPlaying = false; // حالة تذكّر إذا كانت الأغنية شغالة
+let wasMusicPlaying = false;
 
 function openModal(src) {
   if (!modal) return;
 
-  // لو الأغنية شغالة → وقّفها مؤقتًا
-  if (!audio.paused) {
-    wasMusicPlaying = true;
-    audio.pause();
-  } else {
-    wasMusicPlaying = false;
-  }
+  // احفظ إذا الموسيقى كانت شغّالة فعلا الآن
+  wasMusicPlaying = !audio.paused;
+  if (wasMusicPlaying) audio.pause();
 
   modal.hidden = false;
   if (modalVideo) {
@@ -148,7 +147,7 @@ function hideModal() {
   }
   document.body.style.overflow = '';
 
-  // إذا كانت الأغنية شغالة قبل ما يفتح الفيديو → رجّعها
+  // ارجع الموسيقى فقط إذا كانت شغالة قبل ما نفتح
   if (wasMusicPlaying) {
     audio.play().catch(()=>{});
   }
@@ -354,7 +353,7 @@ if (saveBtn) {
 
     const rotation = (Math.random() * 60 - 30).toFixed(2);
     s.style.transform = `rotate(${rotation}deg)`;
-    
+
     bg.appendChild(s);
   }
 })();
