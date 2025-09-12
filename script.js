@@ -190,7 +190,7 @@ starBtns.forEach(btn => {
 });
 
 // حفظ التقييم: localStorage + تنزيل ملف TXT
-const API_URL = 'https://bday-site-dikdwozno-placeholders-projects-6cfea610.vercel.app/api/rate'; // عدّل الرابط
+const API_URL = 'https://bday-site-two.vercel.app/api/rate'; // عدّل الرابط
 
 async function saveRating() {
   if (!currentRating) { rateStatus.textContent = 'اختر التقييم أولًا.'; return; }
