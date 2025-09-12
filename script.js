@@ -145,7 +145,10 @@ function hideModal() {
 
 
 thumbs.forEach(vid => {
-  vid.addEventListener('click', () => openModal(vid.getAttribute('src')));
+  const source = vid.querySelector('source');
+  if (source) {
+    vid.addEventListener('click', () => openModal(source.getAttribute('src')));
+  }
 });
 
 if (closeModal) {
