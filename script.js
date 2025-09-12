@@ -342,7 +342,7 @@ if (saveBtn) {
     s.style.fontSize = size + 'px';
     s.style.left = Math.random()*W + 'px';
     s.style.top  = Math.random()*H + 'px';
-    s.style.opacity = 0.05 + Math.random()*0.05;
+    s.style.opacity = 0.25 + Math.random()*0.05;
     bg.appendChild(s);
   }
 })();
