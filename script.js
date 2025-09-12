@@ -331,7 +331,7 @@ if (saveBtn) {
   }
 
   const EMOJI = '🎂';
-  const COUNT = 25; // عدد الإيموجيات
+  const COUNT = 200; // عدد الإيموجيات
   const W = window.innerWidth;
   const H = window.innerHeight * 3; // يغطي أول 3 شاشات طول
 
@@ -342,7 +342,7 @@ if (saveBtn) {
     s.style.fontSize = size + 'px';
     s.style.left = Math.random()*W + 'px';
     s.style.top  = Math.random()*H + 'px';
-    s.style.opacity = 0.25 + Math.random()*0.05;
+    s.style.opacity = 0.1 + Math.random()*0.05;
     bg.appendChild(s);
   }
 })();
