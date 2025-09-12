@@ -330,15 +330,23 @@ if (saveBtn) {
     document.body.prepend(bg);
   }
 
-  const EMOJI = '🎂';
   const COUNT = 200; // عدد الإيموجيات
   const W = window.innerWidth;
   const H = window.innerHeight * 3; // يغطي أول 3 شاشات طول
+  var EMOJI = '🎂'; // أو 🎉
 
   for(let i=0; i<COUNT; i++){
+    if(Math.random()*10>5)
+      EMOJI = '🎂';
+    else
+      EMOJI = '🎉';
     const s = document.createElement('span');
     s.textContent = EMOJI;
-    const size = 24 + Math.random()*36;   // حجم متغير
+    var size;
+    if(EMOJI == '🎉')
+      size = 12 + Math.random()*24;   // حجم متغير
+    else
+      size = 24 + Math.random()*36;   // حجم متغير
     s.style.fontSize = size + 'px';
     s.style.left = Math.random()*W + 'px';
     s.style.top  = Math.random()*H + 'px';
