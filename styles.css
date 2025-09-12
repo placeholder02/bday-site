@@ -50,59 +50,52 @@ h2 {
 .message p:last-child { margin-bottom: 0; }
 .signature { margin-top: 30px; font-size: 18px; font-weight: 700; text-align: center; color: #907a52; }
 
-/* الشريط العلوي الستّيكي */
+/* البار العلوي */
 .topbar{
   position: sticky;
   top: calc(env(safe-area-inset-top) + 10px);
   z-index: 1100;
   width: min(92vw, 700px);
-  margin: 10px auto 14px;
-  padding: 12px 56px; /* padding جانبي لترك مساحة لأيقونات الجنب */
+  margin: 0 auto 20px;
+  padding: 10px 16px;
   background: rgba(255,255,255,0.55);
   backdrop-filter: blur(8px);
   border: 1px solid rgba(0,0,0,0.06);
   border-radius: 14px;
   box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-/* مركز الشريط: العداد بالمنتصف */
-.topbar-center{
-  display: grid;
-  place-items: center;
-}
 .age-counter{
   text-align: center;
-  font-size: 14px;
+  font-size: 16 px;
   line-height: 1.45;
   color: #907a52;
   font-weight: 700;
-  white-space: normal; /* سطرين */
 }
 .age-counter #ageValue{
   display: inline-block;
+  font-size: 17px;
   font-weight: 800;
-  color: #1f2937;
+  color: #69593c;
 }
 
-/* شريط أيقونات جانبي عمودي */
-.topbar-actions{
-  position: absolute;
-  /* اختر الجهة: لليمين افعل التالي، ولليسار بدّل right بـ left */
-  right: 10px; 
-  top: 50%;
-  transform: translateY(-50%);
+/* الأزرار فوق الرسالة */
+.controls{
   display: flex;
-  flex-direction: column;
-  gap: 8px;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 20px;
 }
-
-/* زر أيقونة دائري صغير */
 .icon-btn{
-  width: 36px;
-  height: 36px;
+  width: 44px;
+  height: 44px;
   display: grid;
   place-items: center;
-  font-size: 18px;
+  font-size: 20px;
   border-radius: 50%;
   border: 1px solid rgba(0,0,0,.08);
   background: linear-gradient(180deg, rgba(255,255,255,.95), rgba(255,255,255,.85));
@@ -113,7 +106,7 @@ h2 {
 .icon-btn:hover{ box-shadow: 0 0 0 3px rgba(245,158,11,.20); }
 .icon-btn:active{ transform: scale(.96); }
 
-/* تأكيد أن الكونفيتي لا يغطي التفاعل */
+/* الكونفيتي يبقى بالخلفية */
 #confetti{ position: fixed; inset: 0; pointer-events: none; z-index: 0; }
 
 .video-gallery {

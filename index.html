@@ -13,24 +13,22 @@
   <audio id="celebrateSound" src="celebrate.mp3" preload="auto"></audio>
   <canvas id="confetti"></canvas>
 <!-- شريط علوي ستّيكي: العداد بالنص + أيقونات عمودية على الجنب -->
+<!-- البار العلوي: العداد فقط -->
 <div class="topbar">
-  <div class="topbar-center">
-    <div id="ageCounter" class="age-counter">
-      صرلها الكرة الأرضية أحلى<br>
-      <span id="ageValue"></span>
-    </div>
-  </div>
-
-  <!-- شريط أيقونات جانبي عمودي -->
-  <div class="topbar-actions" aria-label="أدوات الصفحة">
-    <button id="musicToggleBtn" class="icon-btn" aria-label="تشغيل أو إيقاف الموسيقى">▶️</button>
-    <button id="confettiBtn" class="icon-btn" aria-label="إطلاق الكونفيتي">🎊</button>
+  <div id="ageCounter" class="age-counter">
+    صرلها الكرة الأرضية أحلى<br>
+    <span id="ageValue"></span>
   </div>
 </div>
 
 
+
   <h1>كل عام وإنت بخير نغوشة</h1>
   <h2>صفحة معايدة قال إني مهندس حاسوب</h2>
+<div class="controls">
+  <button id="musicToggleBtn" class="icon-btn" aria-label="تشغيل أو إيقاف الموسيقى">▶️</button>
+  <button id="confettiBtn" class="icon-btn" aria-label="إطلاق الكونفيتي">🎊</button>
+</div>
 
 
   <div class="message">
@@ -103,7 +101,7 @@
     <button class="star" data-value="5" aria-label="5 نجمات"  type="button">★</button>
   </div>
 
-  <textarea id="feedbackNotes" class="notes" rows="4" placeholder="زتي ملاحظاتك هون…"></textarea>
+  <textarea id="feedbackNotes" class="notes" rows="4" placeholder="زتي رأيك هون…"></textarea>
 
   <div class="rate-actions">
     <button id="saveRatingBtn" class="btn">ابعث التقييم</button>
