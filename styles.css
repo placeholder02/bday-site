@@ -27,10 +27,12 @@ body {
 }
 
 /* خلي كل المحتوى فوق */
-body > *:not(.emoji-bg) {
+/* خلي المحتوى فوق الخلفية، لكن لا تلمس المودالز أو الكونفيتي أو التوب بار */
+body > *:not(.emoji-bg):not(.video-modal):not(.image-modal):not(#confetti):not(.topbar){
   position: relative;
   z-index: 1;
 }
+
 
 
 #confetti{ position: fixed; inset:0; pointer-events:none; z-index:2; }
@@ -168,14 +170,15 @@ h2 {
 .video-gallery .thumb:hover { transform: scale(1.05); }
 
 /* مودال الفيديو */
-.video-modal {
-  position: fixed;
+.video-modal{
+  position: fixed !important;
   inset: 0;
   background: rgba(0,0,0,0.85);
+  z-index: 3000; /* أعلى من أي شي */
   display: flex;
-  justify-content: center;
   align-items: center;
-  z-index: 2000;
+  justify-content: center;
+  padding: 20px;
 }
 .video-modal video {
   max-width: 90%;
@@ -191,7 +194,7 @@ h2 {
   color: #fff;
   cursor: pointer;
 }
-.video-modal[hidden] { display: none !important; }
+.video-modal[hidden]{ display:none !important; }
 
 /* قسم الفيديو */
 .video-section {
@@ -348,17 +351,17 @@ h2 {
 .image-gallery img:hover { transform: scale(1.05); }
 
 /* مودال الصورة */
-.image-modal {
-  position: fixed;
+.image-modal{
+  position: fixed !important;
   inset: 0;
   background: rgba(0,0,0,0.85);
+  z-index: 3000; /* نفس المستوى */
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 2100;
   padding: 20px;
 }
-.image-modal[hidden] { display: none !important; }
+.image-modal[hidden]{ display:none !important; }
 .image-modal .image-modal-box {
   max-width: min(900px, 92vw);
   max-height: 88vh;
