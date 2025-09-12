@@ -9,11 +9,22 @@ function tryPlay(){
   audio.play().then(setBtnLabel).catch(()=>{});
 }
 ['click','touchstart'].forEach(ev => {
-  window.addEventListener(ev,function once(){
+  window.addEventListener(ev, function once(){
+    // start background music
     tryPlay();
+
+    // play celebrate sound once
+    celebrateSound.currentTime = 0;
+    celebrateSound.play().catch(()=>{});
+
+    // burst confetti 🎊
+    burst(220);
+
+    // remove listener so it runs only once
     window.removeEventListener(ev, once, {capture:false});
-  },{once:true});
+  }, {once:true});
 });
+
 musicBtn.addEventListener('click', ()=>{
   if(audio.paused) audio.play().catch(()=>{}); else audio.pause();
   setBtnLabel();
