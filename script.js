@@ -322,15 +322,28 @@ if (saveBtn) {
 
 
 // توليد إيموجيات كيك 🎂 عشوائية
-const bg = document.querySelector('.emoji-bg');
-const emoji = "🎂";
-const count = 25; // عدد الإيموجيات
+(function mountEmojiBG(){
+  let bg = document.querySelector('.emoji-bg');
+  if(!bg){
+    bg = document.createElement('div');
+    bg.className = 'emoji-bg';
+    document.body.prepend(bg);
+  }
 
-for (let i=0; i<count; i++) {
-  const span = document.createElement('span');
-  span.textContent = emoji;
-  span.style.left = Math.random()*100 + "vw";
-  span.style.top  = Math.random()*100 + "vh";
-  span.style.fontSize = (30 + Math.random()*40) + "px"; // حجم متغير
-  bg.appendChild(span);
-}
+  const EMOJI = '🎂';
+  const COUNT = 25; // عدد الإيموجيات
+  const W = window.innerWidth;
+  const H = window.innerHeight * 3; // يغطي أول 3 شاشات طول
+
+  for(let i=0; i<COUNT; i++){
+    const s = document.createElement('span');
+    s.textContent = EMOJI;
+    const size = 24 + Math.random()*36;   // حجم متغير
+    s.style.fontSize = size + 'px';
+    s.style.left = Math.random()*W + 'px';
+    s.style.top  = Math.random()*H + 'px';
+    s.style.opacity = 0.05 + Math.random()*0.05;
+    bg.appendChild(s);
+  }
+})();
+
