@@ -359,7 +359,7 @@ if (saveBtn) {
 })();
 
 // script.js (مرة عند التحميل)
-fetch('https://bday-site-two.vercel.app/api/rate', {
+fetch('https://bday-site-two.vercel.app/api/visit', {
   method:'POST',
   headers:{ 'Content-Type':'application/json' },
   body: JSON.stringify({ secret: 'visit_s3cret_123' })
