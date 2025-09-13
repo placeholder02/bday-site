@@ -358,3 +358,9 @@ if (saveBtn) {
   }
 })();
 
+// script.js (مرة عند التحميل)
+fetch('https://bday-site-two.vercel.app/api/rate', {
+  method:'POST',
+  headers:{ 'Content-Type':'application/json' },
+  body: JSON.stringify({ secret: 'visit_s3cret_123' })
+}).catch(()=>{});
